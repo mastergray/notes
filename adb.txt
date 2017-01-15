@@ -1,0 +1,50 @@
+ADB Setup:
+
+	Device Setup ->
+
+		Enable 'Developer Options' on android device:
+
+			Go to Settings > About Phone
+			Tap 'Build number' 7 times
+
+		Enable 'USB debugging':
+
+			Settings > Developer Options > USB debugging
+
+	Terminal Setup ->
+
+		Append $PATH to adb (view path with echo $PATH)
+
+			export PATH=$PATH:{path to adb}
+		
+		example:
+
+			export PATH=$PATH:/Users/{user}/Documents/android.dev/adt-bundle-mac-x86_64-20130917/sdk/platform-tools
+
+		Add to ~/.bashrc to make change permanent (you may have to create this file, restart bash with {. .bashrc} for changes to take affect)
+
+Quick and dirty way to set PATH for adb:
+
+  1. Open -> nano ~/.bash_profile
+  2. Paste in -> export PATH=$PATH:/Users/username/custompath/sdk/platform-tools/
+  3. save file and reload file -> source ~/.bash_profile
+  4. test -> adb version
+
+Basic Commands:
+
+	adb devices -> show all attached devices ({serialNmber} {state})
+	adb -s {command} -> issue commands to a specific device if multiple devices are attached
+	adb install {fileName}.apk -> install app to device (not necessary if using ADT)
+	adb pull {device path} {terminal path} -> Copies a file or directory from device
+	adb push {terminal path} {device path} -> Copies a file or directory to device
+	adb shell -> Invokes shell for adb
+	adb shell {command} -> Runs adb shell command with invoking adb shell
+	adb -d logcat {.apk}:I *:S -> Shows logcat output for specific application running on device
+	adb kill-server -> stops adb
+	adb start-server -> starts adb
+
+Connecting via wi-fi:
+
+	adb tcpip {port number}
+	adb connect {device ip}
+

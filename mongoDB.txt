@@ -1,0 +1,156 @@
+- MongoDB stores data in the form of documents, which are JSON-like field and value pairs (e.g. like hashes or associative arrays).
+- Formally, MongoDB documents are BSON documents. BSON is a binary representation of JSON with additional type information.
+- MongoDB stores all documents in collections.
+- A collection is a group of related documents that have a set of shared common indexes.  (e.g. like tables in relational databases).
+
+Create collection operation:
+
+	db.createCollection(<name>, <optional options>)
+
+- MongoDB creates a collection implicitly when the collection is first referenced in a command.
+- Explicitly creating collections would be for something like a capped collection (a collection with a fixed size)
+
+Create Collection operation (with possible options):
+
+	db.createCollection(<name>, { capped: <boolean>,
+                              autoIndexId: <boolean>,
+                              size: <number>,
+                              max: <number>,
+                              storageEngine: <document> } )
+
+- A query targets a specific collection of documents using criteria, or conditions, that identify the documents that MongoDB returns as a result to that query.
+- A query may include a projection that specifies the fields from the matching documents to return.
+- You can optionally modify queries to impose limits, skips, and sort orders.
+
+	Example MongoDB operation:
+
+		db.collection.operation({key:critera}).modfier
+
+
+- Data modification refers to operations that create, update, or delete data. These operations modify the data of a single collection
+- For the update and delete operations, you can specify the criteria to select the documents to update or remove.
+
+	Example insert operation:
+
+		db.collection.insert{document}
+
+
+- Read operations, or queries, retrieve data stored in the database. In MongoDB, queries select documents from a single collection.
+- For query operations, MongoDB provides:
+
+	db.collection.find()
+
+- The method accepts both the query criteria and projections and returns a cursor to the matching documents. You can optionally modify the query to impose limits, skips, and sort orders.
+
+	Example read query:
+
+		db.users.find(			// collection
+			{age : $gt: 18}},	// criteria
+			{name:1, address: 1}	// projection
+		).limit(5)			// cursor modifier
+
+	SQL equivalent:
+
+		SELECT _id, name, address	// projection
+		FROM users			// table
+		WHERE age > 18			// criteria
+		LIMT 5				// cursor modifier
+
+
+Query Behavior:
+
+	- All queries in MongoDB address a single collection.
+	- You can modify the query to impose limits, skips, and sort orders.
+	- The order of documents returned by a query is not defined unless you specify a sort().
+	- Operations that modify existing documents (i.e. updates) use the same query syntax as queries to select documents to update.
+	- In aggregation pipeline, the $match pipeline stage provides access to MongoDB queries.
+
+- Queries in MongoDB return all fields in all matching documents by default.
+- To limit the amount of data that MongoDB sends to applications, include a projection in the queries.
+- By projecting results with a subset of fields, applications reduce their network overhead and processing requirements.
+- Projections may either specify a list of fields to return or list fields to exclude in the result documents.
+! Except for excluding the _id field in inclusive projections, you cannot mix exclusive and inclusive projections.
+
+
+Example queries:
+
+	db.users.find({age:18},{name: 1, _id:0})
+
+		The query selects from the users collection and matches the documents that have age equal to 18.
+		Then the projection specifies that only the name field should return in the matching documents.
+
+	db.records.find( { "user_id": { $lt: 42 } }, { "history": 0 } )
+
+		This query selects documents in the records collection have a user_ID less than 42 and omits the “history” field from the results.
+
+	db.records.find( { "user_id": { $lt: 42 } }, { "name": 1, "email": 1 } )
+
+		Query matches all user_id less than 42 and returns the name, email, and _id (which is implicitly included) fields.
+
+	db.records.find( { "user_id": { $lt: 42} }, { "_id": 0, "name": 1 , "email": 1 } )
+
+		Query matches all user_id less than 42 and returns only the name and email field.
+
+
+Projection Behavior:
+
+	-By default, the _id field is included in the results. To suppress the _id field from the result set, specify _id: 0 in the projection document.
+	-For fields that contain arrays, MongoDB provides the following projection operators: $elemMatch, $slice, and $.
+	-For related projection functionality in the aggregation framework pipeline, use the $project pipeline stage.
+
+Insert operation example:
+
+	db.users.insert({	// collection
+		name:’sue’,	// field: value
+		age, 26,        // field: value
+		status:”A”      // field: value
+	})
+
+	SQL equivalent:
+
+	INSERT INTO users	// table
+	(name , age, status)	// columns
+	VALUES (“sue”, 26, “A”) // values/row
+
+update operation example:
+
+	db.users.update(			// collection
+		{ age : { $gt: 18 }},		// update criteria
+		{ $set: { status: “A”}},	// update action
+		{ multi:true }			// update option
+	)
+
+	SQL equivalent:
+
+	UPDATE users	 	// table
+	SET status = ‘A’ 	// update action
+	WHERE age > 18   	// update criteria
+
+- By default, db.colletion.update() method updates a single document. However, with the ‘must’ option, update() can update all documents in a collection that match a query.
+- The db.collection.update() method either updates specific fields in the existing document or replaces the document
+- MongoDB preserves the order of the document fields following write operations except for the following cases:
+
+	- The _id field is always the first field in the document.
+	- Updates that include renaming of field names may result in the reordering of fields in the document.
+
+- If the update() method includes upsert: true and no documents match the query portion of the update operation, then the update operation creates a new document.
+- If there are matching documents, then the update operation with the upsert: true modifies the matching document or documents.
+- By specifying upsert: true, applications can indicate, in a single operation, that if no matching documents are found for the update, an insert should be performed.
+- If you create documents using the upsert option to update() consider using a a unique index to prevent duplicated operations.
+
+remove operation example:
+
+	db.users.remove({	// Collection
+		status: “D”	// remove criteria
+	})
+
+	SQL equivalent:
+
+	DELETE FROM users	// table
+	WHERE status = ‘D’	// delete criteria
+
+- By default, db.collection.remove() method removes all documents that match its query. However, the method can accept a flag to limit the delete operation to a single document.
+
+
+
+	

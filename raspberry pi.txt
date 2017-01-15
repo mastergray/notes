@@ -1,0 +1,61 @@
+Backing and restoring a flashed SD card for Raspberry PI - MUST use a class 4 SD card of 4GB (or greater)
+
+Shows list of the mounted disks to get name of volume:
+
+	diskutil list
+
+To backup without compression:
+
+	sudo dd if=/dev/rdisk1 of=~/Desktop/pi.img bs=1m
+
+		dd -> Creates raw copies of data devices
+		if -> 'input file' /dev/disk1
+		rdisk1 -> point to the card's raw storage space to speed up process
+		of -> 'output file' pi.img
+		~ -> alias to user home directory
+		bs=1m -> block size of 1 megabyte
+
+
+
+To backup with compression:
+
+	sudo dd if=/dev/rdisk1 bs=1m | gzip > ~/Desktop/pi.gz
+
+To restore (or flash a new SD card) from an uncompressed file:
+
+	1. umount {SD volume name}
+	2. dd bs=1M if={name of flash image} of={SD volume name}
+
+To restore (or flash a new SD card) from a compressed file:
+ 
+
+	1. diskutil unmount /dev/disk1
+	2. gzip -dc ~/Desktop/pi.gz | sudo dd of=/dev/rdisk1 bs=1m
+
+default login on first-time startup:
+
+user:pi
+password:raspberry
+
+System Config:
+
+	sudo raspi-config
+
+Launch GUI:
+
+	startx
+
+Update OS:
+
+	sudo apt-get update
+
+Wifi Setup:
+
+Troublshoot: if networks can't be scanned try re-opening the interface (e.g. sudo ifup wlan0)
+
+ƒEnviromental PATH variable (view path with echo $PATH):
+
+export PATH=$PATH:{new path} (where : is a delimiter)s
+
+sudo halt -p -> power down
+xinit ./startMidori -> opens midori in full screen mode (need to change midori URL and power savings)

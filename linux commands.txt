@@ -1,0 +1,62 @@
+General Commands:
+
+  grep -rl {search string} {directory}  ->  Searches directory for a string and returns the filenames that string contains
+  ls -i | wc -l 			                  ->  Returns number of files in a directory
+  cd -				                          ->  Returns to previous directory
+  df				                            ->  Disk space usage
+  df -H				                          ->  Display Hard Disk Partition Size in Mega bytes or GB or TB
+  tail -f				                        ->  Read the last ten lines of a file (in real time)
+  find {directory} -name '{string}'     ->  Finds all files that contain the search string for a given directory
+  top				                            ->  Shows information like tasks, memory, cpu and swap ('q' to quit)
+  ps ax				                          ->  What process are running on the system
+  ps ax | grep {process name}	          ->  Return PID for that process
+  kill {signal} {PID}		                ->  Ends process (1 - Hangup;9 - kill; 15 - terminate)
+  clear				                          ->  Clears screen
+  rm -rf {directory nam}                ->  Delete a directory
+  which {application name}              ->  Give file path of application
+  diskutil info / | grep "Free Space"   ->  Free hard drive space (mac os x)
+  ls -1 | sed -e 's/\..*$//'            ->  Show all filename is current directory without file extension
+
+Network Commands:
+
+  ifconfig                              ->  View IP Address and Hardware / MAC address assign to interface(s)
+  ifconfig                              ->  {interface} {ip} netmask {subnet mask} - assigns an IP address to an interface
+  ifconfig | grep inet                  ->  Get local IP
+  iwconfig                              ->  Manages wireless interfaces (may not be the same for all distros)
+  ifup {interface}                      ->  Enables interface
+  ifdown {interface}                    ->  Disables interface
+  ifconfig {interface} mtu {size}       ->  Sets MTU size (1500 by default)
+  ifconfig {interface} -promisc         ->  Sets interface to 'promiscuous' mode (used to view all incoming packets to that interface)
+  ping {ip}                             ->  Tests connectivity to that address
+  ping -c {number} {ip}                 ->  Sends a specific number of PING requests to the given address
+  host {domain}                         ->  Converts a URL into an IP address
+  hostname                              ->  Displays name of your computer.
+  nslookup                              ->  Resolves a DNS related query
+  netstat                               ->  Command display connection info, routing table information etc.
+  netstat -r                            ->  Shows routing table information
+  netstat -a | more                     ->  Listing all the LISTENING Ports of TCP and UDP connection
+  netstat -at                           ->  Listing TCP Ports connections
+  netstat -au                           ->  Listing UDP Ports connections
+  netstat -l                            ->  Listing all LISTENING Connections
+  netstat -lt                           ->  Listing all TCP Listening Ports
+  netstat -lu                           ->  Listing all UDP Listening Ports
+  netstat -lx                           ->  Listing all UNIX Listening Ports
+  netstat -tp                           ->  Displaying Service name with PID
+  netstat -ap | grep http               ->  Find out how many listening programs running on a port.
+  netstat -ac 5 | grep tcp              ->  Displaying Promiscuous Mode
+  dig -x {ip} +short                    ->  DNS Reverse Look-up
+  nslookup {ip}                         ->  DNS Reverse Look-up
+  nslookup -query=mx {doman}            ->  To Query MX (Mail Exchange) record.
+  nslookup -query=any {domain}          ->  To query all Available DNS records
+  arp -a -n                             ->  Find all actives hosts on a network with an ARP request
+
+Application Specific
+
+  java -jar [filename]                  ->  Launch a JAR
+  gcc {file Name}.c -o {progam Name}    ->  Compile a C program
+  xsltproc {xsl file} {xml file}        ->  Use xsltproc to apply an XSL file to an XML file
+
+Directories
+
+  /private/etc/hosts                    ->  Where hostnames are stored (mac os x)
+  /etc/sysconfig/network                ->  Where hostnames can be set permanently (may not be the same for all distros)

@@ -1,0 +1,1 @@
+Notes for things I either can't remember or will probably forget at some point.

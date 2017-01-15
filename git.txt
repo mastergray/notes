@@ -1,0 +1,72 @@
+Setup:
+
+  git init                                        =>  Create new local repo
+  git config --global user.name "{username}"      =>  Set user's username
+  git config --global user.email sam@example.com  =>  Set user's email
+  git remote add origin {URL}                     =>  Connect to remote repo
+
+General:
+
+  git log                     =>  Shows repo history
+  git log --author={username} =>  Shows commits for a specific user
+  git status                  =>  List files changed and files not yet committed
+  git remote -v               =>  Shows all set remote repos
+
+Checkout A Repo:
+
+  git clone {path/to/repo}                    =>  Create a working copy
+  git clone username@hostname {path/to/repo}  =>  Create a working copy from a remote repo
+  
+Update Working copy:
+
+  git pull                                  =>  Update working copy by "fetching" and "merging" most recent changes
+  git merge {branch}                        =>  Merges another branch with active branch
+  git diff {source branch} {target branch}  =>  Shows changes between "source" and "target" branch
+
+Working with branches:
+
+  git branch                      =>  List all branches (inlcuding the one your currently in)
+  git branch -d {branch name}     =>  Delete a branch
+  git checkout {branch name}      =>  Switch from one branch to another
+  git checkout -b {branch name}   =>  Create a new branch and switch to it
+  git push origin :{branch name}  =>  Delete a remote branch
+
+Reset changes:
+
+  git checkout -- {filename}                =>  Reverts local changes
+  git fetch origin
+  git reset --hard origin/master            =>  Drops all commits and replaces local changes with most recent version
+
+Make changes:
+
+  git add {file name}         =>  Adds file to stagging so file can be committed
+  git add .                   =>  Adds all files in CWD to stagging
+  git commit -m "{message}"   =>  Commit files in stagging with message
+  git push origin {branch}    =>  Push local committed changes to branch
+  git push origin master      =>  Push local committed changes to master
+
+Workflows:
+
+  First Push To An Empty Repo
+
+    1. Initialize local repo
+
+      git init
+
+  2. Connect to remote repo
+
+    git remote add origin {URL}
+
+
+  3. Add files (from CWD)
+
+    git add .
+
+  4. Commit changes
+
+    git commit -m "{message}"
+
+  5. Push changes
+
+    git push origin master
+
