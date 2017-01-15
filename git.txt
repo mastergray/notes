@@ -33,9 +33,9 @@ Working with branches:
 
 Reset changes:
 
-  git checkout -- {filename}                =>  Reverts local changes
+  git checkout -- {filename}      =>  Reverts local changes
   git fetch origin
-  git reset --hard origin/master            =>  Drops all commits and replaces local changes with most recent version
+  git reset --hard origin/master  =>  Drops all commits and replaces local changes with most recent version
 
 Make changes:
 
@@ -49,24 +49,8 @@ Workflows:
 
   First Push To An Empty Repo
 
-    1. Initialize local repo
-
-      git init
-
-  2. Connect to remote repo
-
-    git remote add origin {URL}
-
-
-  3. Add files (from CWD)
-
-    git add .
-
-  4. Commit changes
-
-    git commit -m "{message}"
-
-  5. Push changes
-
-    git push origin master
-
+    1. Initialize local repo    =>  git init
+    2. Connect to remote repo   =>  git remote add origin {URL}
+    3. Add files (from CWD)     =>  git add .
+    4. Commit changes           =>  git commit -m "{message}"
+    5. Push changes             =>  git push origin master

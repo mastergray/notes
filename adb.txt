@@ -25,23 +25,23 @@ ADB Setup:
 
 Quick and dirty way to set PATH for adb:
 
-  1. Open -> nano ~/.bash_profile
-  2. Paste in -> export PATH=$PATH:/Users/username/custompath/sdk/platform-tools/
-  3. save file and reload file -> source ~/.bash_profile
-  4. test -> adb version
+  1. Open                       -> nano ~/.bash_profile
+  2. Paste in                   -> export PATH=$PATH:/Users/username/custompath/sdk/platform-tools/
+  3. save file and reload file  -> source ~/.bash_profile
+  4. test                       -> adb version
 
 Basic Commands:
 
-	adb devices -> show all attached devices ({serialNmber} {state})
-	adb -s {command} -> issue commands to a specific device if multiple devices are attached
-	adb install {fileName}.apk -> install app to device (not necessary if using ADT)
-	adb pull {device path} {terminal path} -> Copies a file or directory from device
-	adb push {terminal path} {device path} -> Copies a file or directory to device
-	adb shell -> Invokes shell for adb
-	adb shell {command} -> Runs adb shell command with invoking adb shell
-	adb -d logcat {.apk}:I *:S -> Shows logcat output for specific application running on device
-	adb kill-server -> stops adb
-	adb start-server -> starts adb
+	adb devices                             ->  Show all attached devices ({serialNmber} {state})
+	adb -s {command}                        ->  Issue commands to a specific device if multiple devices are attached
+	adb install {fileName}.apk              ->  Install app to device (not necessary if using ADT)
+	adb pull {device path} {terminal path}  ->  Copies a file or directory from device
+	adb push {terminal path} {device path}  ->  Copies a file or directory to device
+	adb shell                               ->  Invokes shell for adb
+	adb shell {command}                     ->  Runs adb shell command with invoking adb shell
+	adb -d logcat {.apk}:I *:S              ->  Shows logcat output for specific application running on device
+	adb kill-server                         ->  Stops adb
+	adb start-server                        ->  Starts adb
 
 Connecting via wi-fi:
 
