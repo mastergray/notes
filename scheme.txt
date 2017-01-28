@@ -29,7 +29,8 @@ V. The Law of Eq?: The primitive "eq?" takes two argumetns. Each must be a non-n
 -eq? returns true if both non-numeric atoms are the same, othewise eq? returns false.
 -No answer is given if either arguments are numbers. (though in practive some numbers maybe arugments)
 
-*A special form named quote is used to protect tokens from evaluation. It is for giving symbols or lists to a program, which became something else by evaluation. [e.g. in mit-scheme (car '(1 2 3)) => 1 OR (car (quote (1 2 3))) => 1 ]
+*A special form named quote is used to protect tokens from evaluation. It is for giving symbols or lists to a program, 
+   which became something else by evaluation. [e.g. in mit-scheme (car '(1 2 3)) => 1 OR (car (quote (1 2 3))) => 1 ]
 **You use "define" to bind a symbol to a value
 ***The "lambda" is a special form to define procedures.
 
@@ -75,8 +76,12 @@ THE FIRST COMMANDMENT: When recurring on a list of atoms "lat", ask two question
 		(lambda (a lat)						; accepts two arguments "a" and "lat"
 			(cond						; intiate conditional branching
 				((null? lat) #f)			; If lat is an empty list then return FALSE
-				(else (or (eq? (car lat) a)		; Otherwise  check if the first s-expression of lat is  								        ; equal to a. If its, then TRUE is returned
-					   (member? a (cdr lat)))))))	; If it's not, then the remaining list is applied to 										; "member?"
+				
+				(else (or (eq? (car lat) a)		; Otherwise  check if the first s-expression of lat is  
+									; equal to a. If its, then TRUE is returned
+					   
+					   (member? a (cdr lat)))))))	; If it's not, then the remaining list is applied to 
+					   				; "member?"
 
 -"or" takes an arbitrary number of arguments and evaluates them from left to right. It returns the value of the first argument which is not FALSE and the rest of arguments are not evaluated. It returns the value of the last argument if it is evaluated.
 
@@ -115,4 +120,5 @@ THE FIRST COMMANDMENT (preliminary): Always ask null? as the first question in e
 									; then return remaining atom list
 				
 				(else (cons (car lat)			; Otherwise add the first atom of lat
-					(rember a (cdr lat)))))))	; to the result of applying rember to a and the 										; remaining atom list
+					(rember a (cdr lat)))))))	; to the result of applying rember to a and the 										
+									; remaining atom list
