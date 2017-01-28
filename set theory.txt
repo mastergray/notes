@@ -1,0 +1,112 @@
+Set Theory
+
+	Notation
+	
+		x e A => x is a member of A
+		x !e A => x is not a member of A
+		x c A => x is a subset of A
+		x !c A => x is not a subset of A
+		p * q => Logical AND
+		p ^ q => Logical OR
+		0 => an empty set (null)
+		U => universal set (all sets of some specific discourse being investigated)
+
+	Set Membership
+	
+		A = {x : condition} => the element x is a member of the set A if x is true for the given condition.
+
+	Subsets
+
+		A c B => If for every element in set A is also an element of set B, then A is a subset of B.
+	
+	Proper Subset
+	
+		A C B = If A is a subset of B, and A != B, then A is a proper subset of B.
+	
+	Disjoint Set
+	
+		A n B = 0 => If A and B have no sets in common, then A and B are disjoint (A n B = 0)
+	
+	Power Set
+	
+		P(A) => the set of all subsets for the set A
+		
+	Cardinality
+	
+		|A| => the number of elements in the set A.
+		
+	Operations
+
+		Intersection => A n B = {x : x e A * x e B}
+		Union => a u b = {x : x e A ^ x e B}
+		Relative Difference = A \ B = {x : x e A * x !e B}
+		Symmetric Difference = A @ B = {x :(x e A * x !e B) ^ (x e b * x e a)}
+		Complement => A^c = {x : x !e A}
+		Cartesian Product => A x B = {(x,y) : x e A * y e B}
+	
+	Ordered Pairs (Kuratowski definition)
+
+		(x, y) = {{x}, {x,y}}, where A x B c P(P(A u B))
+	
+	Laws
+					
+		Commutative Laws => A u B = B u A
+		                    A n B = B n A
+		
+		Associative Laws => A u (B u C) = (A u B) u C
+		                    A n (B n C) = (A n B) n C
+
+		Distributive Laws =  A u (B n C) = (A u B) n (A u C)
+		                     A n (B u C) = (A n B) u (A n C)
+		
+		DeMorgan's Laws => (A u B)^c = A^c n B^c
+		                   (A n B)^c = A^c u B^c
+		
+		Complement Laws => A u A^c = U
+		                   A n A^c = 0
+		                   U^c = 0
+                       0^c = U
+						   
+		Double Complement => (A^c)^c = A
+		
+		Identity Laws => A u 0 = A
+		                 A n U = A
+		
+		Idempotence => A u A = A
+		               A n A = A
+		
+		Dominance => A n 0 = 0
+		             A u U = U
+						 
+		Absorption Laws => A u (A n B) = A
+		                   A n (A u B) = A
+						   
+	Theorems and Equivalences
+
+		A c A => Every set is a subset of itself
+		0 c A => Every set has an empty subset
+		A \ B = A n B^c
+		A @ B = (A u B) \ (A n B)
+		|A u B| = |A| + |B|
+ 		|A^c| = |U| - |A|
+		|A \ B| = |A| - |A n B|
+		|A u B| = |A| + |B| - |A n B
+		|P(A)| = 2^|A|
+		A n (B \ A) = 0
+		(A n B) u (A n B^c) = A
+		A x B != B x A => Cartesian Product is a non-communitive operation
+		
+	Axioms
+
+		Assertions
+	
+			I. "element" and "set" are undefined terms.
+			II. "elements belong to a set" is an undefined relation.
+
+		Principle of Extension => Two sets A and B are equal if and only if they have the same elements,
+		                          that is, if every element of A belongs to B and every element of B belongs to A
+		
+		Principle Of Abstractions => Given any set U and any condition F, there is a set A such that the elements
+		                             of A are exactly those elements in U which meet the condition of F; that is:
+									 
+		                             A = {x : x e U * F(x) is true}

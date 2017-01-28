@@ -1,0 +1,115 @@
+Notes taken from "The Little Schemer" (by Daniel P. Friedman)
+
+0. Defintions
+-An "atom" is a string of characters [e.g. atom, turkey, 1492, u, and *abc$]
+-A "list" is is a collection of atoms enclosed by parenthese [e.g. (atom), (atom turkey or)]
+-All atoms AND lists are "s-expressions"
+-(atom turkey) or is NOT an example of a list - this is actually two sperate s-expressions - ((atom turkey) or) however is a list
+-A list can also be thought of as a collection of s-expressions since atoms are also s-expressions. (so then a list can also be a list of lists)
+-() is a list that contains no s-expressions - this is called a "null" or empty list
+-() is NOT an atom since it is a list
+-(() () ()) is a list since it is a collection of empty lists.
+
+I. The Law Of Char: The primitive "car" is defined only for non-empty lists.
+-car returns the first s-expression of a list
+
+II. The Law Of Cdr: The primitive "cdr" (could-er) is defined only for non-empty lists. The cdr for any non-empty list is always another list.
+-Cdr the returns the s-expression of a list that does NOT include the first s-expression of a list (i.e. NOT car of a list)
+-If an atom is used for Cdr - the expression will have no answer because Cdr only operates on lists
+-If null is used for Cdr - the expression will have no answer because Cdr only operates on non-empty lists
+
+III. The Law of Cons: The primitive "cons" takes two arguments in which first arugment is any expression and the second argument MUSt be a list. The result of cons is always a list.
+-cons adds an s-expression to the front of a list
+-If null is given as the second arugment, then the second argument is returns as is [e.g. (cons () (a b c)) => (a b c)]
+
+IV. The Law of Null?: The primitive "null?" is defined only for lists.
+-null? returns true if the given list is contain no s-expressions and false if the given list contains any s-expressions.
+
+V. The Law of Eq?: The primitive "eq?" takes two argumetns. Each must be a non-numeric atom.
+-eq? returns true if both non-numeric atoms are the same, othewise eq? returns false.
+-No answer is given if either arguments are numbers. (though in practive some numbers maybe arugments)
+
+*A special form named quote is used to protect tokens from evaluation. It is for giving symbols or lists to a program, which became something else by evaluation. [e.g. in mit-scheme (car '(1 2 3)) => 1 OR (car (quote (1 2 3))) => 1 ]
+**You use "define" to bind a symbol to a value
+***The "lambda" is a special form to define procedures.
+
+THE FIRST COMMANDMENT: When recurring on a list of atoms "lat", ask two questions about it: (null? lat) and else. When reucrring on a number "n", ask two questions about it: (zero? n) and else. When reucurring on a list of s-expressions, l, ask three questions about it: (null? l), (atom? (car l)) and else.
+
+-For a list of atoms (lISTatOMs), if list is non-empty - continue, otherwise do somethine else.
+-For a list of numbers, if a number is not zero - continue, otherwise do something else.
+-For a list of s-expressions, if a list is non-empty or the first-expression is an atom - continue, otherwise do something else.
+-Given l = (a b c d), for (lat l) => true since every s-expression of "l" is an atome
+-Given l = ((a b) c d), for (lat l) => false since (car l) is a list.
+-Given l = (a (b c) d), for (lat l) => false since l contains an s-expresion
+-Given l = (), for (lat l) => true since l contains no lists.
+-Every lat is a list of atoms.
+ 
+-The procedure "lat?"  returns true if all s-expressions of a list are atoms, otherwise returns false :
+
+	(define lat?								            ; procedure's name is "lat?"
+		(lambda (l) 							            ; accepts single argument "l"
+			(cond                               ; specifiy condtion
+				((null? l) #t)                    ; if l is an empty list then return TRUE
+				((atom? (car l)) (lat? (cdr l)))	; if the first s-expression is an atom, then apply lat? to the remaining list
+				(else #f))))                      ; otherwise return FALSE
+
+-"cond" is a branching mechanism of the form:
+
+	(cond (							              ; intiate conditional branching
+		(predicate_a clause_a)	        ; evaluates predicate_a and if true, evaluates and returns clause_a - otherwise moves to next predicate
+		(predicate_b clause_b)		      ; evaluates predicate_b and if true, evaluates and returns clause_b - otherwise moves to next predicate
+		(predicate_c clause_c)          ; evaluates predicate_c and if true, evaluates and returns clause_c
+		(else clause_d))                ; if no predicates are true, then clause_d is evaluated and returned
+
+-The procedure "member?" return true if a given atom is in a given list of atoms, otherwise returns false:
+
+	(define member?							            ; procedure's name is "member?"
+		(lambda (a lat)							          ; accepts two arguments "a" and "lat"
+			(cond								                ; intiate conditional branching
+				((null? lat) #f)					        ; If lat is an empty list then return FALSE
+				(else (or (eq? (car lat) a)		    ; Otherwise  check if the first s-expression of lat is equal to a. If its, then TRUE is returned
+					   (member? a (cdr lat)))))))	  ; If it's not, then the remaining list is applied to "member?"
+
+-"or" takes an arbitrary number of arguments and evaluates them from left to right. It returns the value of the first argument which is not FALSE and the rest of arguments are not evaluated. It returns the value of the last argument if it is evaluated.
+
+	(or #f 1) 	; returns 1
+	(or #t #f)	; returns #t
+	(or 3 2 1)	; returns 3
+	(or #f)		  ; returns #f
+
+THE FIRST COMMANDMENT (preliminary): Always ask null? as the first question in expressing any function.
+
+-The first question we always ask is if what we are testing for is null or not? (null?)
+-The way we ask these questions is by using "cond"
+
+-The procredure "rember" (REMove memBER) takes an atom as its first argument and a list of atoms as a second argument to make a new list of atoms  with the first occurence of the atom in the old list removed [e.g. (member b (a b c b)) => (a c b)]
+
+	(define rember 											              ; procedure's name is "rember"
+		(lambda (a lat)											            ; accepets two arguments "a" and "lat"
+			(cond												                  ; initiate conditional branching
+				((null? lat) (quote ()))							      ; If lat is an empty list, then return a new empty list
+				(else (cond										              ; Otherwise, initiate additional conditional branching
+						((eq ? (car lat) a) (cdr lat))				  ;  If the first s-expression is equal to a, then return remaining list
+						(else (cons (car lat)						        ; Otherwise return cons being applied to the first atom of lat
+								       (rember a (cdr lat)))))))))	; and the result of applying rember to the remaining list
+
+-THE SECOND COMMANDMENT: Use "cons" to build lists
+			
+	; Simplfied version of "rember"
+
+	(define rember										      ; procedure's name is "rember"
+		(lambda (a lat)									      ; accepts two arguments "a" and "lat"
+			(cond										            ; initiate condtional branching
+				(null? lat) (quote ()))					  ; If lat is empty then return an empty list
+				((eq? (car lat) a) (cdr lat))			; If the first atom of lat is equal to a, then return remaining atom list
+				(else (cons (car lat)						  ; Otherwise add the first atom of lat
+							(rember a (cdr lat)))))))	  ; to the result of applying rember to a and the remaining atom list
+
+
+
+
+
+
+
+
+
