@@ -46,36 +46,44 @@ THE FIRST COMMANDMENT: When recurring on a list of atoms "lat", ask two question
  
 -The procedure "lat?"  returns true if all s-expressions of a list are atoms, otherwise returns false :
 
-	(define lat?								            ; procedure's name is "lat?"
-		(lambda (l) 							            ; accepts single argument "l"
-			(cond                               ; specifiy condtion
+	(define lat?					    	  ; procedure's name is "lat?"
+		(lambda (l) 				    	  ; accepts single argument "l"
+			(cond                               	  ; specifiy condtion
 				((null? l) #t)                    ; if l is an empty list then return TRUE
-				((atom? (car l)) (lat? (cdr l)))	; if the first s-expression is an atom, then apply lat? to the remaining list
+				
+				((atom? (car l)) (lat? (cdr l)))  ; if the first s-expression is an atom 
+								  ; then apply lat? to the remaining list
+				
 				(else #f))))                      ; otherwise return FALSE
 
 -"cond" is a branching mechanism of the form:
 
-	(cond (							              ; intiate conditional branching
-		(predicate_a clause_a)	        ; evaluates predicate_a and if true, evaluates and returns clause_a - otherwise moves to next predicate
-		(predicate_b clause_b)		      ; evaluates predicate_b and if true, evaluates and returns clause_b - otherwise moves to next predicate
+	(cond (				        ; intiate conditional branching
+		
+		(predicate_a clause_a)	        ; evaluates predicate_a and if true, evaluates and returns clause_a 
+						; otherwise moves to next predicate
+		
+		(predicate_b clause_b)		; evaluates predicate_b and if true, evaluates and returns clause_b
+						; otherwise moves to next predicate
+		
 		(predicate_c clause_c)          ; evaluates predicate_c and if true, evaluates and returns clause_c
 		(else clause_d))                ; if no predicates are true, then clause_d is evaluated and returned
 
 -The procedure "member?" return true if a given atom is in a given list of atoms, otherwise returns false:
 
-	(define member?							            ; procedure's name is "member?"
-		(lambda (a lat)							          ; accepts two arguments "a" and "lat"
-			(cond								                ; intiate conditional branching
-				((null? lat) #f)					        ; If lat is an empty list then return FALSE
-				(else (or (eq? (car lat) a)		    ; Otherwise  check if the first s-expression of lat is equal to a. If its, then TRUE is returned
-					   (member? a (cdr lat)))))))	  ; If it's not, then the remaining list is applied to "member?"
+	(define member?							; procedure's name is "member?"
+		(lambda (a lat)						; accepts two arguments "a" and "lat"
+			(cond						; intiate conditional branching
+				((null? lat) #f)			; If lat is an empty list then return FALSE
+				(else (or (eq? (car lat) a)		; Otherwise  check if the first s-expression of lat is  								        ; equal to a. If its, then TRUE is returned
+					   (member? a (cdr lat)))))))	; If it's not, then the remaining list is applied to 										; "member?"
 
 -"or" takes an arbitrary number of arguments and evaluates them from left to right. It returns the value of the first argument which is not FALSE and the rest of arguments are not evaluated. It returns the value of the last argument if it is evaluated.
 
 	(or #f 1) 	; returns 1
 	(or #t #f)	; returns #t
 	(or 3 2 1)	; returns 3
-	(or #f)		  ; returns #f
+	(or #f)		; returns #f
 
 THE FIRST COMMANDMENT (preliminary): Always ask null? as the first question in expressing any function.
 
@@ -84,32 +92,27 @@ THE FIRST COMMANDMENT (preliminary): Always ask null? as the first question in e
 
 -The procredure "rember" (REMove memBER) takes an atom as its first argument and a list of atoms as a second argument to make a new list of atoms  with the first occurence of the atom in the old list removed [e.g. (member b (a b c b)) => (a c b)]
 
-	(define rember 											              ; procedure's name is "rember"
-		(lambda (a lat)											            ; accepets two arguments "a" and "lat"
-			(cond												                  ; initiate conditional branching
-				((null? lat) (quote ()))							      ; If lat is an empty list, then return a new empty list
-				(else (cond										              ; Otherwise, initiate additional conditional branching
-						((eq ? (car lat) a) (cdr lat))				  ;  If the first s-expression is equal to a, then return remaining list
-						(else (cons (car lat)						        ; Otherwise return cons being applied to the first atom of lat
-								       (rember a (cdr lat)))))))))	; and the result of applying rember to the remaining list
+	(define rember 							; procedure's name is "rember"
+		(lambda (a lat)						; accepets two arguments "a" and "lat"
+			(cond						; initiate conditional branching
+				((null? lat) (quote ()))		; If lat is an empty list, then return a new empty list
+				(else (cond				; Otherwise, initiate additional conditional branching
+					((eq ? (car lat) a) (cdr lat))	;  If the first s-expression is equal to a, 
+									; then return remaining list
+						(else (cons (car lat)   ; Otherwise return cons being applied to 
+									; the first atom of lat and the result 
+				(rember a (cdr lat)))))))))		; of applying rember to the remaining list
 
 -THE SECOND COMMANDMENT: Use "cons" to build lists
 			
 	; Simplfied version of "rember"
 
-	(define rember                          ; procedure's name is "rember"
-		(lambda (a lat)                       ; accepts two arguments "a" and "lat"
-			(cond										            ; initiate condtional branching
-				(null? lat) (quote ()))					  ; If lat is empty then return an empty list
-				((eq? (car lat) a) (cdr lat))			; If the first atom of lat is equal to a, then return remaining atom list
-				(else (cons (car lat)						  ; Otherwise add the first atom of lat
-							(rember a (cdr lat)))))))	  ; to the result of applying rember to a and the remaining atom list
-
-
-
-
-
-
-
-
-
+	(define rember                          			; procedure's name is "rember"
+		(lambda (a lat)                       			; accepts two arguments "a" and "lat"
+			(cond						; initiate condtional branching
+				(null? lat) (quote ()))			; If lat is empty then return an empty list
+				((eq? (car lat) a) (cdr lat))		; If the first atom of lat is equal to a, 
+									; then return remaining atom list
+				
+				(else (cons (car lat)			; Otherwise add the first atom of lat
+					(rember a (cdr lat)))))))	; to the result of applying rember to a and the 										; remaining atom list
