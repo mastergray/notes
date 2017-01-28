@@ -97,8 +97,8 @@ THE FIRST COMMANDMENT (preliminary): Always ask null? as the first question in e
 			
 	; Simplfied version of "rember"
 
-	(define rember										      ; procedure's name is "rember"
-		(lambda (a lat)									      ; accepts two arguments "a" and "lat"
+	(define rember                          ; procedure's name is "rember"
+		(lambda (a lat)                       ; accepts two arguments "a" and "lat"
 			(cond										            ; initiate condtional branching
 				(null? lat) (quote ()))					  ; If lat is empty then return an empty list
 				((eq? (car lat) a) (cdr lat))			; If the first atom of lat is equal to a, then return remaining atom list

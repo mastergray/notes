@@ -65,8 +65,8 @@ Set Theory
 		Complement Laws => A u A^c = U
 		                   A n A^c = 0
 		                   U^c = 0
-                       0^c = U
-						   
+		                   0^c = U
+
 		Double Complement => (A^c)^c = A
 		
 		Identity Laws => A u 0 = A
